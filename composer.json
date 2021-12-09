@@ -2,7 +2,8 @@
     "name": "test-php/teste-php-via-maquinas",
     "autoload": {
         "psr-4": {
-            "app\\": "app/"
+            "app\\": "app/",
+            "App\\": "app/"
         }
     },
     "require": {}

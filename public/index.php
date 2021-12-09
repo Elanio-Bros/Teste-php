@@ -1,6 +1,12 @@
 <?php
-require_once 'vendor/autoload.php';
+if (!@include_once('../app/config/functions.php')) {
+    require_once 'app/config/functions.php';
+} else {
+    require_once '../app/config/functions.php';
+}
 
-use app\controller\TesteController;
+require_once relative_locate('vendor/autoload.php');
+require_once relative_locate('app/config/config.php');
 
-$controler = new TesteController();
+
+new \App\Core\RouteCore;
