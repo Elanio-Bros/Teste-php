@@ -2,10 +2,18 @@
 
 namespace App\Controller;
 
-class TesteController
+use App\Core\Controller;
+
+class TesteController extends Controller
 {
-    public function __construct()
+    public function entrada()
     {
-        echo 'funfou';
+        $this->load('home', [
+            'nome' => 'Bros',
+            'subArr' => [
+                ['nome' => 'João', 'idade' => 19],
+                ['nome' => 'Maria', 'idade' => 18]
+            ],
+        ]);
     }
 }
