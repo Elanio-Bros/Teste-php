@@ -2,12 +2,14 @@
     "name": "test-php/teste-php-via-maquinas",
     "autoload": {
         "psr-4": {
-            "app\\": "app/",
-            "App\\": "app/"
+            "App\\": "app/",
+            "Models\\": "models/"
         }
     },
     "require": {
         "twig/twig": "^3.3",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "illuminate/database": "^8.75",
+        "illuminate/pagination": "^8.75"
     }
 }

@@ -14,7 +14,7 @@ class RouteCore
     public function __construct()
     {
         $this->initialize();
-        $locate = 'app/config/Route.php';
+        $locate = 'app/route/Route.php';
         require_once relative_locate($locate);
         $this->execute();
     }
@@ -23,6 +23,9 @@ class RouteCore
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $uri_local = $_SERVER['REQUEST_URI'];
+        if (strpos($uri_local, '?')) {
+            $uri_local = mb_substr($uri_local, 0, strpos($uri_local, '?'));
+        }
         $this->uri = str_contains($uri_local, BASE) && BASE != '/' ?
             str_replace(BASE, '', "/$uri_local") : $uri_local;
     }
@@ -47,20 +50,19 @@ class RouteCore
     {
         switch ($this->method) {
             case 'GET':
-                if ($this->valideRoutes($this->routeArr['get']) === false) {
+                if ($this->validateCallback($this->routeArr['get']) === false) {
                     (new Messagem)->errorHttp(404);
-                    // echo "Rota Não Existe";
                 }
                 break;
             case 'POST':
-                if ($this->valideRoutes($this->routeArr['post']) === false) {
+                if ($this->validateCallback($this->routeArr['post']) === false) {
                     (new Messagem)->errorHttp(404);
                 }
                 break;
         }
     }
 
-    private function valideRoutes(array $routes)
+    private function validateCallback(array $routes)
     {
         $route = array_search($this->uri, array_column($routes, 'router'));
         if ($route === false) {
@@ -68,25 +70,29 @@ class RouteCore
         } else if (is_callable($routes[$route]['callback'])) {
             $routes[$route]['callback']();
         } else if (is_string($routes[$route]['callback'])) {
-            $callback = explode('@', $routes[$route]['callback']);
-            if (!isset($callback[0]) || !isset($callback[1])) {
-                (new Messagem)->errorHttp(500, 'Controlador ou Método Não Encontrado');
-                return;
-            }
-
-            $controller = 'app\\controller\\' . $callback[0];
-
-            if (!class_exists($controller)) {
-                (new Messagem)->errorHttp(500, 'Controlador Não Existe');
-                return;
-            }
-            if (!method_exists($controller, $callback[1])) {
-                (new Messagem)->errorHttp(500, 'Método Não Existe');
-                return;
-            }
-            call_user_func_array([
-                new $controller, $callback[1]
-            ], []);
+            $this->validateStringCallback($routes[$route]['callback']);
         }
+    }
+
+    private function validateStringCallback(String $route)
+    {
+        $callback = explode('@', $route);
+        if (!isset($callback[0]) || !isset($callback[1])) {
+            (new Messagem)->errorHttp(500, 'Controlador ou Método Não Encontrado');
+            return;
+        }
+        $controller = 'App\\Controller\\' . $callback[0];
+
+        if (!class_exists($controller)) {
+            (new Messagem)->errorHttp(500, 'Controlador Não Existe');
+            return;
+        }
+        if (!method_exists($controller, $callback[1])) {
+            (new Messagem)->errorHttp(500, 'Método Não Existe');
+            return;
+        }
+        call_user_func_array([
+            new $controller, $callback[1]
+        ], []);
     }
 }

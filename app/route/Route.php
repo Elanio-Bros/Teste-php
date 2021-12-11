@@ -4,10 +4,8 @@ use App\Controller\TesteController;
 // $this->get('/home', function () {
 //     echo 'estou na home';
 // });
-$this->get('/', function () {
-    (new TesteController)->entrada();
-});
-$this->get('/home', 'TesteController@entrada');
+$this->get('/', 'TesteController@entrada');
+$this->post('/ola', 'TesteController@entrada');
 // $this->get('/home', function () {
 //     echo 'entrada';
 // });
