@@ -2,7 +2,9 @@
 
 namespace App\Core;
 
+use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use App\Core\Messagem;
 
 class Database
 {
@@ -21,5 +23,6 @@ class Database
         ]);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
+        $capsule->connection()->getPdo();
     }
 }
