@@ -6,7 +6,7 @@ use App\Core\Controller;
 
 class Messagem extends Controller
 {
-    public function errorHttp($code, $mesagem = null)
+    public function errorHttp($code, $mesagem = null, $log = null)
     {
         if ($mesagem == null) {
             switch ($code) {
@@ -20,7 +20,8 @@ class Messagem extends Controller
         }
         $this->load("error/http", [
             'messagem' => $mesagem,
-            'code' => $code
+            'code' => $code,
+            'log' => $log,
         ]);
     }
 }

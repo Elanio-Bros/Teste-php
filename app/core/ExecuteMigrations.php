@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use Exception;
+use Illuminate\Container\Container;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class ExecuteMigrations
@@ -18,5 +19,9 @@ class ExecuteMigrations
                 new $migration, $function
             ], []);
         }
+    }
+    public static function dropTables()
+    {
+        Capsule::schema()->dropAllTables();
     }
 }

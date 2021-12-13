@@ -22,7 +22,4 @@ foreach ($commands as $command) {
     $command = "App\\Command\\" . $command[1];
     $application->add(new $command);
 }
-// $application->add(new Command\Migration);
-// $application->add(new Command\RollBackMigration);
-// $application->add(new Command\FreshMigration);
 $application->run();

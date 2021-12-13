@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Usuario extends Model
+class Atividades extends Model
 {
-    protected $table = 'usuarios';
+    protected $table = 'tarefas';
     protected $fillable = [
-        'nome', 'usuario', 'email'
-    ];
-    protected $hidden = [
-        'senha'
+        'titulo', 'descrição', 'tipo_atividade', 'finalizada', 'finalizada_em'
     ];
 }

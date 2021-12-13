@@ -64,15 +64,17 @@
 <table class="table">
     <thead>
         <tr>
+            <th scope="col">id</th>
             <th scope="col">Nome</th>
-            <th scope="col">Idade</th>
+            <th scope="col">Sobrenome</th>
         </tr>
     </thead>
     <tbody>
         {% for i in subArr %}
         <tr>
-            <td>{{i['nome']}}</td>
-            <td>{{i.idade}}</td>
+        <td>{{i['id']}}</td>
+            <td>{{i['name']}}</td>
+            <td>{{i.sobrenome}}</td>
         </tr>
         {% endfor %}
     </tbody>

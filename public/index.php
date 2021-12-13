@@ -12,5 +12,9 @@ try {
     new \App\Core\RouteCore;
 } catch (Exception $e) {
     //criar exception bd
-    (new App\Core\Messagem)->errorHttp(500, "Erro De Conexão com o Banco De Dados");
+    if ($e->errorInfo[1] == 2002) {
+        (new App\Core\Messagem)->errorHttp(500, "Erro De Conexão com o Banco De Dados");
+    } else {
+        (new App\Core\Messagem)->errorHttp(500, '',$e);
+    }
 }

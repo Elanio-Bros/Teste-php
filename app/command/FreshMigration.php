@@ -15,7 +15,7 @@ class FreshMigration extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        ExecuteMigrations::migration('down');
+        ExecuteMigrations::dropTables();
         ExecuteMigrations::migration('up');
         echo "Todas As Migrações Foram Recriadas";
         return Command::SUCCESS;
