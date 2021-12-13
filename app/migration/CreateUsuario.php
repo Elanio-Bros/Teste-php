@@ -15,6 +15,7 @@ class CreateUsuario extends Migration
         Capsule::schema()->create('usuario', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('sobrenome');
             $table->timestamps();
         });
     }
