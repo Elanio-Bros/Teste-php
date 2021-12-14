@@ -23,5 +23,6 @@ class Messagem extends Controller
             'code' => $code,
             'log' => $log,
         ]);
+        die();
     }
 }

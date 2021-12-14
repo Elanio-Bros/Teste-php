@@ -11,10 +11,10 @@ class ExecuteMigrations
     public static function migration($function)
     {
 
-        $migrations = glob('app/migration/*.php', GLOB_NOESCAPE);
+        $migrations = glob('app/database/migration/*.php', GLOB_NOESCAPE);
         foreach ($migrations as $migration) {
             preg_match("/(\w+).php/", $migration, $migration);
-            $migration = "App\\Migration\\" . $migration[1];
+            $migration = "App\\Database\\Migration\\" . $migration[1];
             call_user_func_array([
                 new $migration, $function
             ], []);

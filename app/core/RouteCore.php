@@ -4,18 +4,18 @@ namespace App\Core;
 
 use App\Core\Messagem;
 
+require_once relative_locate('app/routes/Routes.php');
+
 class RouteCore
 {
     private $uri;
     private $method;
 
-    private $routeArr = [];
+    protected static $routeArr = [];
 
     public function __construct()
     {
         $this->initialize();
-        $locate = 'app/route/Route.php';
-        require_once relative_locate($locate);
         $this->execute();
     }
 
@@ -30,32 +30,16 @@ class RouteCore
             str_replace(BASE, '', "/$uri_local") : $uri_local;
     }
 
-    private function get($route, $callback)
-    {
-        $this->routeArr['get'][] = [
-            'router' => $route,
-            'callback' => $callback,
-        ];
-    }
-    private function post($route, $callback)
-    {
-        $this->routeArr['post'][] = [
-            'router' => $route,
-            'callback' => $callback,
-        ];
-    }
-
-
     private function execute()
     {
         switch ($this->method) {
             case 'GET':
-                if ($this->validateCallback($this->routeArr['get']) === false) {
+                if ($this->validateCallback(self::$routeArr['get']) === false) {
                     (new Messagem)->errorHttp(404);
                 }
                 break;
             case 'POST':
-                if ($this->validateCallback($this->routeArr['post']) === false) {
+                if ($this->validateCallback(self::$routeArr['post']) === false) {
                     (new Messagem)->errorHttp(404);
                 }
                 break;
@@ -94,5 +78,37 @@ class RouteCore
         call_user_func_array([
             new $controller, $callback[1]
         ], []);
+    }
+
+    public static function get($route, $callback, $name = null): void
+    {
+        self::$routeArr['get'][] = [
+            'router' => $route,
+            'callback' => $callback,
+            'name' => $name,
+        ];
+    }
+    public static function post($route, $callback, $name = null): void
+    {
+        self::$routeArr['post'][] = [
+            'router' => $route,
+            'callback' => $callback,
+            'name' => $name,
+        ];
+    }
+
+    public static function getRouteName($name): string
+    {
+        $url = $_SERVER['HTTP_HOST'];
+        if (str_contains($_SERVER['REQUEST_URI'], BASE) && BASE !== '/') {
+            $url = $url . rtrim(BASE, '/');
+        }
+        foreach (self::$routeArr as $key => $route) {
+            $route = array_search($name, array_column($route, 'name'));
+            if ($route !== false) {
+                return "http://" . $url . self::$routeArr[$key][$route]['router'];
+            }
+        }
+        return false;
     }
 }

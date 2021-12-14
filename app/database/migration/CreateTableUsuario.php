@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Migration;
+namespace App\Database\Migration;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Migrations\Migration;

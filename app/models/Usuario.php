@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Usuario extends Model
 {
-    protected $table = 'usuarios';
+    protected $table = 'Usuarios';
     protected $fillable = [
         'nome', 'usuario', 'email'
     ];

@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Atividades extends Model
 {
-    protected $table = 'tarefas';
+    protected $table = 'Tarefas';
     protected $fillable = [
         'titulo', 'descrição', 'tipo_atividade', 'finalizada', 'finalizada_em'
     ];
