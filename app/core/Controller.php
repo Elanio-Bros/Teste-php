@@ -20,4 +20,8 @@ class Controller
         }));
         echo $twig->render($view . '.twig.php', $param);
     }
+    protected function redirect($url, $error = null)
+    {
+        header('Location: ' . $url);
+    }
 }

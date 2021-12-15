@@ -5,7 +5,7 @@ namespace App\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Core\ExecuteMigrations;
+use App\Core\Database;
 
 class FreshMigration extends Command
 {
@@ -15,8 +15,8 @@ class FreshMigration extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        ExecuteMigrations::dropTables();
-        ExecuteMigrations::migration('up');
+        Database::dropTables();
+        Database::migration('up');
         echo "Todas As Migrações Foram Recriadas";
         return Command::SUCCESS;
     }

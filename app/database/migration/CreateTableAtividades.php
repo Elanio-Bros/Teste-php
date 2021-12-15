@@ -15,10 +15,10 @@ class CreateTableAtividades extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descrição');
-            $table->enum("tipo_atividade", ['desenvolvimento','atendimento','manutenção','manutenção urgente']);
-            $table->boolean('finalizada');
+            $table->enum("tipo_atividade", ['desenvolvimento', 'atendimento', 'manutenção', 'manutenção urgente']);
+            $table->boolean('finalizado')->default('0');
             $table->timestamps();
-            $table->timestamp('finalizada_em')->nullable();
+            $table->timestamp('finalizado_em')->nullable();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateTableAtividades extends Migration
      */
     public function down()
     {
-        Capsule::schema()->dropIfExists('atividades');
+        Capsule::schema()->dropIfExists('Atividades');
     }
 }

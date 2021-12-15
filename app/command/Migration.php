@@ -5,7 +5,7 @@ namespace App\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Core\ExecuteMigrations;
+use App\Core\Database;
 
 class Migration extends Command
 {
@@ -16,7 +16,7 @@ class Migration extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
-        ExecuteMigrations::migration("up");
+        Database::migration("up");
         echo "Todas As Tabelas Foram Criadas";
         return Command::SUCCESS;
     }

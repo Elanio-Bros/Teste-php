@@ -7,16 +7,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Core\Database;
 
-class DropTables extends Command
+class Seeders extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'migration:drop';
-    protected static $defaultDescription = 'Recriar tabelas';
+    protected static $defaultName = 'migration:seed';
+    protected static $defaultDescription = 'Criar Valores Predefinidos no banco de dadoss';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        Database::dropTables();
-        echo "Todas as Tableas Foram Apagadas";
+        Database::seeders();
+        echo "Valore Adicionados";
         return Command::SUCCESS;
     }
 }

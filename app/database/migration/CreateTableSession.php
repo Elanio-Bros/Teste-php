@@ -6,17 +6,14 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTableUsuario extends Migration
+
+class CreateTableSession extends Migration
 {
     public function up()
     {
-        Capsule::schema()->create('Usuarios', function (Blueprint $table) {
+        Capsule::schema()->create('Sessions', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->string('usuario')->unique();
-            $table->string('email')->unique();
-            $table->text('senha');
-            $table->timestamps();
+            $table->string('titulo');
         });
     }
 
@@ -27,6 +24,6 @@ class CreateTableUsuario extends Migration
      */
     public function down()
     {
-        Capsule::schema()->dropIfExists('usuarios');
+        Capsule::schema()->dropIfExists('atividades');
     }
 }

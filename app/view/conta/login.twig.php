@@ -33,13 +33,19 @@
 {% block content %}
 <div class="h-100 center d-flex flex-column justify-content-center align-items-center align-self-center">
     <div class="login-form">
+        {% if error != null %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
         <form action="" method="post" class="p-4">
             <h2 class="text-center m-3">Login</h2>
             <div class="form-group my-2">
-                <input type="text" class="form-control" placeholder="Usuário/Email" required="required">
+                <input type="text" class="form-control" placeholder="Usuário/Email" name="usuario" required="required">
             </div>
             <div class="form-group my-2">
-                <input type="password" class="form-control" placeholder="Senha" required="required">
+                <input type="password" class="form-control" placeholder="Senha" name="senha" required="required">
             </div>
             <div class="form-group my-2">
                 <button type="submit" class="btn btn-primary btn-block">Login</button>

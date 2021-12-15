@@ -6,6 +6,7 @@ use App\Core\Controller;
 
 class Messagem extends Controller
 {
+    protected static $erros;
     public function errorHttp($code, $mesagem = null, $log = null)
     {
         if ($mesagem == null) {

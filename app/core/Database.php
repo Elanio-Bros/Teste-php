@@ -24,4 +24,32 @@ class Database
         $capsule->bootEloquent();
         $capsule->connection()->getPdo();
     }
+    public static function migration($function)
+    {
+
+        $migrations = glob('app/database/migration/*.php', GLOB_NOESCAPE);
+        foreach ($migrations as $migration) {
+            preg_match("/(\w+).php/", $migration, $migration);
+            $migration = "App\\Database\\Migration\\" . $migration[1];
+            call_user_func_array([
+                new $migration, $function
+            ], []);
+        }
+    }
+    public static function dropTables()
+    {
+        Capsule::schema()->dropAllTables();
+    }
+
+    public static function seeders()
+    {
+        $seeders = glob('app/database/seeders/*.php', GLOB_NOESCAPE);
+        foreach ($seeders as $seeders) {
+            preg_match("/(\w+).php/", $seeders, $seeders);
+            $seeders = "App\\Database\\Seeders\\" . $seeders[1];
+            call_user_func_array([
+                new $seeders, "run"
+            ], []);
+        }
+    }
 }
