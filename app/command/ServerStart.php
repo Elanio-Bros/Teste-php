@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ServerStart extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'server';
+    protected static $defaultName = 'serve';
     protected static $defaultDescription = 'Iniciar Servidor';
 
     protected function execute(InputInterface $input, OutputInterface $output)

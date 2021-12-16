@@ -20,12 +20,12 @@
     }
 
     .block {
-        background-color:#000000AA;
-        border-radius:5px;
+        background-color: #000000AA;
+        border-radius: 5px;
         width: 60%;
-        height:50%;
+        height: 50%;
         padding: 1%;
-        overflow-x:auto;
+        overflow-x: auto;
     }
 </style>
 {% endblock %}
@@ -33,6 +33,8 @@
 <div class="mx-auto d-flex flex-column justify-content-center align-items-center">
     <h1>{{code}}</h1>
     <h2>{{messagem}}</h2>
+    {% if log != null %}
     <span class="block">{{log}}</span>
+    {% endif %}
 </div>
 {% endblock %}

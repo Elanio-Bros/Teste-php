@@ -37,7 +37,7 @@
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="atividades">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAtividade">
             <i class="fas fa-plus"></i>
         </button>
         <table class="table">
@@ -55,15 +55,17 @@
                 <tr id="{{atividade.id}}">
                     <td><input type="checkbox" name="finalizado"></td>
                     <th scope="row">{{atividade.titulo}}</th>
-                    <td>{{atividade.descrição}}</td>
+                    <td>{{atividade.descricao}}</td>
                     <td>{{atividade.tipo_atividade}}</td>
                     <td class="d-flex flex-row">
-                        <button type="button" class="btn btn-warning">
+                        <button type="button" class="btn btn-warning" data="edit">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button type="button" class="btn  btn-danger">
+                        {% if atividade.tipo_atividade != 'manutenção urgente' %}
+                        <button type="button" class="btn  btn-danger" data="trash">
                             <i class="fas fa-trash"></i>
                         </button>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -78,6 +80,7 @@
                     <th scope="col">Título</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Tipo</th>
+                    <th scope="col">Finalizado em</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,15 +88,16 @@
                 <tr id="{{atividade.id}}">
                     <td><input type="checkbox" name="finalizado" checked></td>
                     <th scope="row">{{atividade.titulo}}</th>
-                    <td>{{atividade.descrição}}</td>
+                    <td>{{atividade.descricao}}</td>
                     <td>{{atividade.tipo_atividade}}</td>
+                    <td>{{atividade.finalizado_em|date('d/m/Y G:m:s')}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addAtividade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form class="modal-content" method="POST" action="{{route('registrar.atividade')}}">
             <div class="modal-header">
@@ -121,6 +125,41 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Adicionar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="editAtividade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" method="POST" action="{{route('editar.atividade')}}">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Tarefa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Título</label>
+                    <input type="text" name="titulo" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tipo</label>
+                    <select class="form-select" name="tipo" aria-label="Default select example">
+                        <option selected disabled>Selecione o Tipo de Atividade</option>
+                        <option value="desenvolvimento">Desenvolvimento</option>
+                        <option value="atendimento">Atendimento</option>
+                        <option value="manutenção">Manutenção</option>
+                        <option value="manutenção urgente">Manutenção Urgente</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-control" name="descricao" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <label class="form-label">Finalizada?</label>
+                <input type="checkbox" name="finalizado">
+            </div>
+            <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </form>
@@ -129,31 +168,60 @@
 {% endblock %}
 {% block script %}
 <script>
-    $('input[name="finalizado"]').change(function() {
+    $('table input[name="finalizado"]').change(function() {
         if ($(this).prop("checked")) {
-            $.ajax({
-                url: "{{ route('atividade.finalizada') }}",
-                type: "post",
-                data: {
-                    'id': $(this).closest('tr').prop("id"),
-                    'finalizado': true,
-                },
-            }).done(function(response) {
-                document.location.reload();
-            })
+            var data = {
+                'id': $(this).closest('tr').prop("id"),
+                'finalizado': true,
+            };
         } else {
-            $.ajax({
-                url: "{{ route('atividade.finalizada') }}",
-                type: "post",
-                data: {
-                    'id': $(this).closest('tr').prop("id"),
-                    'finalizado': false,
-                },
-            }).done(function(response) {
-                console.log(response);
-                document.location.reload();
-            });
+            var data = {
+                'id': $(this).closest('tr').prop("id"),
+                'finalizado': false,
+            };
         }
-    })
+        $.ajax({
+            url: "{{ route('atividade.finalizada') }}",
+            type: "post",
+            data: data
+        }).done(function(response) {
+            document.location.reload();
+        });
+    });
+    $('button[data="trash"]').click(function() {
+        $.ajax({
+            url: "{{ route('apagar.atividade') }}",
+            type: "post",
+            data: {
+                "id": $(this).closest('tr').prop("id"),
+            }
+        }).done(function(response) {
+            document.location.reload();
+        });
+    });
+    $('button[data="edit"]').click(function() {
+        var id = $(this).closest('tr').prop("id")
+        $.ajax({
+            url: "{{ route('atividade.json') }}",
+            type: "get",
+            data: {
+                "id": id,
+            }
+        }).done(function(response) {
+            var atividade = $.parseJSON(response)
+            $('#editAtividade input[name="titulo"]').val(atividade.titulo);
+            $('#editAtividade select[name="tipo"]').val(atividade.tipo_atividade);
+            $('#editAtividade textarea[name="descricao"]').val(atividade.descricao);
+            $('#editAtividade input[name="id"]').val(id);
+            var myModal = new bootstrap.Modal(document.getElementById('editAtividade'))
+            myModal.show();
+        });
+        $('#editAtividade form').submit(function(event) {
+            event.preventDefault();
+            $(this).append(`<input type="hidden" name="id" value="${id}">`);
+            this.submit();
+        });
+    });
+    
 </script>
 {% endblock %}

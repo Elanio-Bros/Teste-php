@@ -9,6 +9,6 @@ class Atividades extends Model
 {
     protected $table = 'Atividades';
     protected $fillable = [
-        'titulo', 'descrição', 'tipo_atividade', 'finalizado', 'finalizado_em'
+        'titulo', 'descricao', 'tipo_atividade', 'finalizado', 'finalizado_em'
     ];
 }

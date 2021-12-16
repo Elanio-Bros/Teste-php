@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Database\Migration;
-
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Migrations\Migration;
+use App\Core\Database as Migration;
 use Illuminate\Database\Schema\Blueprint;
-
 
 class CreateTableAtividades extends Migration
 {
@@ -14,7 +11,7 @@ class CreateTableAtividades extends Migration
         Capsule::schema()->create('Atividades', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->text('descrição');
+            $table->text('descricao');
             $table->enum("tipo_atividade", ['desenvolvimento', 'atendimento', 'manutenção', 'manutenção urgente']);
             $table->boolean('finalizado')->default('0');
             $table->timestamps();

@@ -2,8 +2,8 @@
 
 namespace App\Core;
 
-use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Twig\Extra\Intl\IntlExtension;
 
 class Controller
 {
@@ -22,6 +22,6 @@ class Controller
     }
     protected function redirect($url, $error = null)
     {
-        header('Location: ' . $url);
+        return header('Location: ' . $url);
     }
 }

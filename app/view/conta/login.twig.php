@@ -44,20 +44,34 @@
             <div class="form-group my-2">
                 <input type="text" class="form-control" placeholder="Usuário/Email" name="usuario" required="required">
             </div>
-            <div class="form-group my-2">
-                <input type="password" class="form-control" placeholder="Senha" name="senha" required="required">
+            <div class="input-group mb-3">
+                <input type="password" name="senha" class="form-control" id="pass" placeholder="Senha" required>
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2"><a class="ocultaPass">
+                            <i class="fas fa-eye" style="display: none"></i>
+                            <i class="fas fa-eye-slash"></i></a></span>
+                </div>
             </div>
             <div class="form-group my-2">
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </div>
             <div class="my-2">
                 <label class="float-left form-check-label">
-                    <input type="checkbox" class="mx-1">Remember me
+                    <input type="checkbox" name="remeber" class="mx-1">Remember me
                 </label>
             </div>
-            <p class="text-center"><a href="{{route('conta')}}">Criar Conta</a></p>
+            <!-- <p class="text-center"><a href="{{route('conta')}}">Criar Conta</a></p> -->
         </form>
 
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(".ocultaPass").click(function() {
+        $(this).children("i").toggle();
+        let inputSenha = $(this).closest('.input-group').find('input');
+        inputSenha.prop("type", inputSenha.prop("type") == "password" ? "text" : "password");
+    });
+</script>
 {% endblock %}

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Database\Migration;
+declare(strict_types=1);
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Migrations\Migration;
+use App\Core\Database as Migration;
 use Illuminate\Database\Schema\Blueprint;
 
 
@@ -13,7 +13,11 @@ class CreateTableSession extends Migration
     {
         Capsule::schema()->create('Sessions', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
+            $table->unsignedBigInteger('usuario_id')->unique();
+            $table->foreign('usuario_id')->references('id')->on('Usuarios');
+            $table->string('hash_session');
+            $table->boolean('remember')->default(0);
+            $table->timestamp('start_at')->useCurrent();
         });
     }
 
@@ -24,6 +28,6 @@ class CreateTableSession extends Migration
      */
     public function down()
     {
-        Capsule::schema()->dropIfExists('atividades');
+        Capsule::schema()->dropIfExists('Sessions');
     }
 }

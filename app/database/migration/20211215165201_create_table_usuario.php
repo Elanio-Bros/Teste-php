@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Database\Migration;
-
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Migrations\Migration;
+use App\Core\Database as Migration;
 use Illuminate\Database\Schema\Blueprint;
 
 class CreateTableUsuario extends Migration
