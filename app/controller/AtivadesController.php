@@ -6,6 +6,7 @@ use App\Core\Controller;
 use App\Core\Input;
 use App\Core\RouteCore;
 use App\Models\Atividades;
+use App\Models\Session;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class AtivadesController extends Controller

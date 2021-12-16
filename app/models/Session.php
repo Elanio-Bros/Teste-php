@@ -12,7 +12,7 @@ class Session extends Model
     protected $fillable = [
         'usuario_id',
         'hash_session',
-        'remember'
+        'remember',
     ];
 
     public function usuario()
