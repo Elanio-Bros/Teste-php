@@ -42,7 +42,7 @@
         <form action="" method="post" class="p-4">
             <h2 class="text-center m-3">Login</h2>
             <div class="form-group my-2">
-                <input type="text" class="form-control" placeholder="Usuário/Email" name="usuario" required="required">
+                <input type="text" class="form-control" placeholder="Usuário/Email" name="usuario" value="{{usuario}}" required="required">
             </div>
             <div class="input-group mb-3">
                 <input type="password" name="senha" class="form-control" id="pass" placeholder="Senha" required>

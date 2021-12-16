@@ -11,6 +11,27 @@
     table td {
         word-wrap: break-word;
     }
+
+    @keyframes fadein {
+        from {
+            left: -100%;
+        }
+
+        to {
+            left: 0%;
+        }
+    }
+
+    #error {
+        width: 20%;
+        position: absolute;
+        top: 50%;
+        animation: fadein 1s;
+    }
+
+    .border1 {
+        border: 1px solid red;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -21,12 +42,31 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-            <a class="btn btn-outline-danger" href="{{route('logout')}}">
-                Sair
-            </a>
+            <div class="dropdown">
+                <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1">
+                    <li class="">
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addAtividade">
+                            Criar Atividade
+                        </button>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class=""><a class="dropdown-item bg-danger text-light" href="{{route('logout')}}">Sair</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
+{% if error !=null %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" id="error">
+    {{error}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="atividades-tab" data-bs-toggle="tab" data-bs-target="#atividades" type="button" role="tab" aria-controls="home" aria-selected="true">Tarefas</button>
@@ -37,9 +77,11 @@
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="atividades">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAtividade">
-            <i class="fas fa-plus"></i>
-        </button>
+        <div class="d-flex flex-row-reverse m-2">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAtividade">
+                Adicionar Atividade
+            </button>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -56,7 +98,7 @@
                     <td><input type="checkbox" name="finalizado"></td>
                     <th scope="row">{{atividade.titulo}}</th>
                     <td>{{atividade.descricao}}</td>
-                    <td>{{atividade.tipo_atividade}}</td>
+                    <td>{{ucwords(atividade.tipo_atividade)}}</td>
                     <td class="d-flex flex-row">
                         <button type="button" class="btn btn-warning" data="edit">
                             <i class="fas fa-edit"></i>
@@ -89,7 +131,7 @@
                     <td><input type="checkbox" name="finalizado" checked></td>
                     <th scope="row">{{atividade.titulo}}</th>
                     <td>{{atividade.descricao}}</td>
-                    <td>{{atividade.tipo_atividade}}</td>
+                    <td>{{ucwords(atividade.tipo_atividade)}}</td>
                     <td>{{atividade.finalizado_em|date('d/m/Y G:m:s')}}</td>
                 </tr>
                 {% endfor %}
@@ -168,7 +210,25 @@
 {% endblock %}
 {% block script %}
 <script>
+    function messagemErro(error) {
+        var item = '<div class="alert alert-danger alert-dismissible fade show" role="alert" id="error">' + error + '<button class="btn-close" data-bs-dismiss="alert" aria-label ="Close"></button></div>';
+        $('body').append(item);
+    }
+    $(function() {
+        var date = new Date();
+        if (date.getDay() == 5 && date.getHours() >= 13 && date.getMinutes() > 0) {
+            $('select[name="tipo"] option[value="manutenção urgente"]').attr('disabled', 'disabled')
+        }
+        setTimeout(function() {
+            if (document.getElementById('error') != null) {
+                var alert = new bootstrap.Alert(document.getElementById('error'))
+                alert.dispose()
+            }
+        }, 4500);
+    });
+
     $('table input[name="finalizado"]').change(function() {
+        var element = $(this)
         if ($(this).prop("checked")) {
             var data = {
                 'id': $(this).closest('tr').prop("id"),
@@ -185,7 +245,12 @@
             type: "post",
             data: data
         }).done(function(response) {
-            document.location.reload();
+            if (response != '' && 'error' in $.parseJSON(response)) {
+                messagemErro($.parseJSON(response)['error'])
+                element.prop("checked", false);
+            } else {
+                document.location.reload();
+            }
         });
     });
     $('button[data="trash"]').click(function() {
@@ -222,6 +287,5 @@
             this.submit();
         });
     });
-    
 </script>
 {% endblock %}

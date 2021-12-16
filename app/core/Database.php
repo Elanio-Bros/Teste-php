@@ -24,10 +24,11 @@ class Database
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
         $capsule->connection()->getPdo();
-        Capsule::raw("SET time_zone='" . TIME_ZONE . "'");
+        self::setTimeZone();
     }
     public static function migration($function)
     {
+        self::setTimeZone();
         $migrations = glob('app/database/migration/*.php', GLOB_NOESCAPE);
         foreach ($migrations as $migration) {
             preg_match("/(\w+).php/", $migration, $class);
@@ -52,5 +53,10 @@ class Database
             $seeders = "App\\Database\\Seeders\\" . $seeders[1];
             (new $seeders)->run();
         }
+    }
+
+    private static function setTimeZone()
+    {
+        Capsule::raw("SET GLOBAL time_zone='" . TIME_ZONE . "'");
     }
 }

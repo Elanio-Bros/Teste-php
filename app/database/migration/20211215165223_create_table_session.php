@@ -11,13 +11,14 @@ class CreateTableSession extends Migration
 {
     public function up()
     {
+        Capsule::raw("SET GLOBAL time_zone='" . TIME_ZONE . "'");
         Capsule::schema()->create('Sessions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('usuario_id')->unique();
+            $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('Usuarios');
-            $table->string('hash_session');
+            $table->string('hash_session')->unique();
             $table->boolean('remember')->default(0);
-            $table->timestamp('start_at')->useCurrent();
+            $table->timestamp('start_at')->default(date("Y-m-d H:i:s"));
         });
     }
 
