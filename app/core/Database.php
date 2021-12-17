@@ -2,13 +2,14 @@
 
 namespace App\Core;
 
+use DateTime;
 use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Facades\DB;
 
 class Database
 {
-    function __construct() 
+    function __construct()
     {
         $capsule = new Capsule;
         $capsule->addConnection([
@@ -23,9 +24,9 @@ class Database
         ]);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
-        Capsule::update("SET time_zone='" . TIME_ZONE . "'");
-        $capsule->connection()->getPdo();
-        
+        $this->setTimeZoneDataBase();
+        // $capsule->connection()->getPdo();
+
     }
     public static function migration($function): void
     {
@@ -52,6 +53,22 @@ class Database
             preg_match("/(\w+).php/", $seeders, $seeders);
             $seeders = "App\\Database\\Seeders\\" . $seeders[1];
             (new $seeders)->run();
+        }
+    }
+
+    private function setTimeZoneDataBase(): void
+    {
+        try {
+            Capsule::select("SET time_zone='" . date_default_timezone_get() . "'");
+        } catch (Exception $e) {
+            $now = new DateTime();
+            $mins = $now->getOffset() / 60;
+            $sgn = ($mins < 0 ? -1 : 1);
+            $mins = abs($mins);
+            $hrs = floor($mins / 60);
+            $mins -= $hrs * 60;
+            $offset = sprintf('%+d:%02d', $hrs * $sgn, $mins);
+            Capsule::update("SET @@global.time_zone='$offset'");
         }
     }
 }

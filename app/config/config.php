@@ -10,8 +10,7 @@ try {
     define('DBNAME', (getenv('DB_DATABASE') != null ? getenv('DB_DATABASE') : 'mysql'));
     define('DBUSER', (getenv('DB_USERNAME') != null ? getenv('DB_USERNAME') : 'root'));
     define('DBPASS', (getenv('DB_PASSWORD') != null ? getenv('DB_PASSWORD') : ''));
-    define('TIME_ZONE', (getenv('TIME_ZONE') != null ?  getenv('TIME_ZONE') : 'America/Sao_Paulo'));
-    date_default_timezone_set(TIME_ZONE);
+    date_default_timezone_set((getenv('TIME_ZONE') != null ?  getenv('TIME_ZONE') : 'America/Sao_Paulo'));
 } catch (Exception $e) {
     if (isset($_SERVER['REQUEST_URI'])) {
         (new Messagem)->errorHttp(500, "Arquivo .env não encontrado", $e);
