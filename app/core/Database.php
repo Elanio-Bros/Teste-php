@@ -23,8 +23,9 @@ class Database
         ]);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
+        Capsule::update("SET time_zone='" . TIME_ZONE . "'");
         $capsule->connection()->getPdo();
-        Capsule::raw("SET time_zone='" . TIME_ZONE . "'");
+        
     }
     public static function migration($function): void
     {
