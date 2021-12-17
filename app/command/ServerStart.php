@@ -12,7 +12,7 @@ class ServerStart extends Command
     protected static $defaultName = 'serve';
     protected static $defaultDescription = 'Iniciar Servidor';
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): string
     {
         return shell_exec('php -S 127.0.0.1:8000 -t public');
     }

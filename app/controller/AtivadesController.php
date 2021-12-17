@@ -6,8 +6,7 @@ use App\Core\Controller;
 use App\Core\Input;
 use App\Core\RouteCore;
 use App\Models\Atividades;
-use App\Models\Session;
-use Illuminate\Database\Capsule\Manager as Capsule;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class AtivadesController extends Controller
 {
@@ -25,7 +24,7 @@ class AtivadesController extends Controller
         $this->hour = intval(date('H'));
         $this->minute = intval(date('i'));
     }
-    public function entrada($error = null)
+    public function entrada(string $error = null): void
     {
         $atividades = Atividades::where('finalizado', 0)->get();
         $atividades_finalizadas = Atividades::where('finalizado', 1)->get();
@@ -34,7 +33,7 @@ class AtivadesController extends Controller
             'finalizadas' => $atividades_finalizadas,
         ], $error);
     }
-    public function registrarAtividade()
+    public function registrarAtividade(): void
     {
         $request = new Input;
         $tipo = $request->post('tipo');
@@ -49,7 +48,7 @@ class AtivadesController extends Controller
             $this->redirect(RouteCore::getRouteName('entrada'));
         }
     }
-    public function infoAtividade()
+    public function infoAtividade(): void
     {
         $request = new Input;
         if ($request->get('id') != null) {
@@ -59,7 +58,7 @@ class AtivadesController extends Controller
             $this->redirect(Routecore::getRouteName('home'));
         }
     }
-    public function atividadeFinalizada()
+    public function atividadeFinalizada(): void
     {
         $request = new Input;
         $atividade = Atividades::firstWhere('id', $request->post('id'));
@@ -73,7 +72,7 @@ class AtivadesController extends Controller
             ]);
         }
     }
-    public function editarAtividade()
+    public function editarAtividade(): void
     {
         $request = new Input;
         $finalizado = $request->post('finalizado', FILTER_VALIDATE_BOOLEAN);
@@ -92,7 +91,7 @@ class AtivadesController extends Controller
             $this->redirect(RouteCore::getRouteName('entrada'));
         }
     }
-    public function apagarAtividade()
+    public function apagarAtividade(): void
     {
         $request = new Input;
         $atividade = Atividades::firstWhere('id', $request->post('id'));
@@ -102,14 +101,16 @@ class AtivadesController extends Controller
             $this->entrada('Não Pode Ser Apagado');
         }
     }
-    private function validacaoDateAtividade($tipo)
+    private function validacaoDateAtividade(string $tipo): bool
     {
         return $this->day == 'fri' && $this->hour >= 13
             && $this->minute > 0 &&
             $tipo == 'manutenção urgente';
     }
-    private function validacaoDescricao($descricao, $atividade)
+    private function validacaoDescricao(string $descricao, array $atividade): bool
     {
-        return strlen($descricao) < 50 && ($atividade['tipo_atividade'] == 'atendimento' || $atividade['tipo_atividade'] == 'manutenção urgente');
+        return strlen($descricao) < 50 &&
+            ($atividade['tipo_atividade'] == 'atendimento' ||
+                $atividade['tipo_atividade'] == 'manutenção urgente');
     }
 }

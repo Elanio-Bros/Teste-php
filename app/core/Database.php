@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class Database
 {
-    function __construct()
+    function __construct() 
     {
         $capsule = new Capsule;
         $capsule->addConnection([
@@ -26,7 +26,7 @@ class Database
         $capsule->connection()->getPdo();
         Capsule::raw("SET time_zone='" . TIME_ZONE . "'");
     }
-    public static function migration($function)
+    public static function migration($function): void
     {
         $migrations = glob('app/database/migration/*.php', GLOB_NOESCAPE);
         foreach ($migrations as $migration) {
@@ -39,12 +39,12 @@ class Database
             (new $class)->$function();
         }
     }
-    public static function dropTables()
+    public static function dropTables(): void
     {
         Capsule::schema()->dropAllTables();
     }
 
-    public static function seeders()
+    public static function seeders(): void
     {
         $seeders = glob('app/database/seeders/*.php', GLOB_NOESCAPE);
         foreach ($seeders as $seeders) {

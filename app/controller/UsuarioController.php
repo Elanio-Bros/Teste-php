@@ -13,7 +13,7 @@ use DateTime;
 
 class UsuarioController extends Controller
 {
-    public function home($error = null)
+    public function home(string $error = null): void
     {
         session_start();
         if (isset($_SESSION['usuario'])) {
@@ -32,9 +32,9 @@ class UsuarioController extends Controller
             $contaLogin = $_SESSION['usuario']['login'];
             session_destroy();
         }
-        $this->load('conta/login', ['usuario' => $contaLogin]);
+        $this->load('conta/login', ['usuario' => (isset($contaLogin) ? $contaLogin : null)]);
     }
-    public function login()
+    public function login(): void
     {
         $request = new Input;
         Session::where('start_at', '<', date('Y-m-d H:i:s', strtotime('+2 days')))->delete();
@@ -57,7 +57,7 @@ class UsuarioController extends Controller
             $this->home('Usuário ou Senha Invalidos');
         }
     }
-    public function logout()
+    public function logout(): void
     {
         session_start();
         if (isset($_SESSION['usuario'])) {

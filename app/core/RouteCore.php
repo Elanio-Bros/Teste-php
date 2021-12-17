@@ -19,7 +19,7 @@ class RouteCore
         $this->execute();
     }
 
-    private function initialize()
+    private function initialize(): void
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $uri_local = $_SERVER['REQUEST_URI'];
@@ -30,7 +30,7 @@ class RouteCore
             str_replace(BASE, '', "/$uri_local") : $uri_local;
     }
 
-    private function execute()
+    private function execute(): void
     {
         switch ($this->method) {
             case 'GET':
@@ -46,19 +46,19 @@ class RouteCore
         }
     }
 
-    private function validateCallback(array $routes)
+    private function validateCallback(array $routes): mixed
     {
         $route = array_search($this->uri, array_column($routes, 'router'));
         if ($route === false) {
             return false;
         } else if (is_callable($routes[$route]['callback'])) {
-            $routes[$route]['callback']();
+            return $routes[$route]['callback']();
         } else if (is_string($routes[$route]['callback'])) {
-            $this->validateStringCallback($routes[$route]['callback']);
+            return $this->validateStringCallback($routes[$route]['callback']);
         }
     }
 
-    private function validateStringCallback(String $route)
+    private function validateStringCallback(String $route): void
     {
         $callback = explode('@', $route);
         if (!isset($callback[0]) || !isset($callback[1])) {
@@ -97,7 +97,7 @@ class RouteCore
         ];
     }
 
-    public static function getRouteName($name): string
+    public static function getRouteName($name): mixed
     {
         $url = $_SERVER['HTTP_HOST'];
         if (str_contains($_SERVER['REQUEST_URI'], BASE) && BASE !== '/') {

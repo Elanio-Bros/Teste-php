@@ -7,7 +7,7 @@ use App\Core\Controller;
 class Messagem extends Controller
 {
     protected static $erros;
-    public function errorHttp($code, $mesagem = null, $log = null)
+    public function errorHttp(int $code, string $mesagem = null, string $log = null): void
     {
         if ($mesagem == null) {
             switch ($code) {
