@@ -32,7 +32,7 @@ class UsuarioController extends Controller
             $contaLogin = $_SESSION['usuario']['login'];
             session_destroy();
         }
-        $this->load('conta/login', ['usuario' => (isset($contaLogin) ? $contaLogin : null)]);
+        $this->load('conta/login', ['usuario' => (isset($contaLogin) ? $contaLogin : null)],$error);
     }
     public function login(): void
     {
