@@ -25,7 +25,7 @@ class Database
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
         $this->setTimeZoneDataBase();
-        // $capsule->connection()->getPdo();
+        $capsule->connection()->getPdo();
 
     }
     public static function migration($function): void

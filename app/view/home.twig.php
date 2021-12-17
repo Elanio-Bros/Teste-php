@@ -132,7 +132,7 @@
                     <th scope="row">{{atividade.titulo}}</th>
                     <td>{{atividade.descricao}}</td>
                     <td>{{ucwords(atividade.tipo_atividade)}}</td>
-                    <td>{{atividade.finalizado_em|date('d/m/Y G:m:s')}}</td>
+                    <td>{{atividade.finalizado_em|date('d/m/Y G:i:s')}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
