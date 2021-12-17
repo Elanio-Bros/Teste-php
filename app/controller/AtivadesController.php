@@ -103,14 +103,12 @@ class AtivadesController extends Controller
     }
     private function validacaoDateAtividade(string $tipo): bool
     {
-        return $this->day == 'fri' && $this->hour >= 13
+        return $this->day === 'fri' && $this->hour >= 13
             && $this->minute > 0 &&
-            $tipo == 'manutenção urgente';
+            $tipo === 'manutenção urgente';
     }
-    private function validacaoDescricao(string $descricao, array $atividade): bool
+    private function validacaoDescricao(string $descricao, mixed $atividade): bool
     {
-        return strlen($descricao) < 50 &&
-            ($atividade['tipo_atividade'] == 'atendimento' ||
-                $atividade['tipo_atividade'] == 'manutenção urgente');
+        return strlen($descricao) < 50 && ($atividade['tipo_atividade'] === 'atendimento' || $atividade['tipo_atividade'] === 'manutenção urgente');
     }
 }
