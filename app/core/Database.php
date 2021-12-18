@@ -31,11 +31,11 @@ class Database
     {
         $fileMigrations = glob('app/database/migration/*.php', GLOB_NOESCAPE);
         foreach ($fileMigrations as $fileMigration) {
-            preg_match("/(\w+).php/", $fileMigration, $fileMigration);
+            preg_match("/(\w+).php/", $fileMigration, $class);
             $class = implode(array_map(function ($value) {
                 return ucfirst($value);
-            }, array_slice(explode('_', $fileMigration[1]), 1)));
-            require_once $migration;
+            }, array_slice(explode('_', $class[1]), 1)));
+            require_once $fileMigration;
             (new $class)->$function();
         }
     }
