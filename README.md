@@ -43,7 +43,8 @@ O sistema conta com recurso de comandos utilizados via CLI(Termial), criados pel
 
 ### Lista de Comandos
 - `list` **(Comando padrão do [symfony/console](https://symfony.com/doc/current/components/console))**:  listar todos os comandos do sistema
--`create-usuario [<nome>] [<usuário>] [<email>] [<senha>]`: adicionar um novo usuário ao sistema, **os argumentos nome, usuário, email e senha são obrigatorios**<br>
+
+- `create-usuario [<nome>] [<usuário>] [<email>] [<senha>]`: adicionar um novo usuário ao sistema, **os argumentos nome, usuário, email e senha são obrigatorios**<br>
 Exemplo:`php console.php create-usuario Mario Bros Mario@email.com 12345mario`
 
 - `usuario-pass [<usuário>] [<nova_senha>]`: mudar a senha de um determinado usuario, **os argumentos usuário e nova_senha são obrigatorios**<br>
