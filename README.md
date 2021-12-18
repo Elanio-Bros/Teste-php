@@ -50,11 +50,15 @@ Exemplo de uso :`php console.php usuario-pass Bros mario12345`
 - `migration`: executa todas as migraçõs para o banco de dados
     - `--seed`: introduz valores pré-definidos no banco de dados, **opção não obrigatoria**<br>
     Exemplo de uso:`php console.php migration --seed`
+    
 - `migration:fresh`: recarrega todas as migraçõs para o banco de dados
     - `--seed`: introduz valores pré-definidos no banco de dados, **opção não obrigatoria**<br>
     Exemplo de uso:`php console.php migration:fresh --seed`
+    
 - `migration:seed`: introduz valores pré-definidos no banco de dados
+
 - `migration:drop`: apaga todas as tabelas do banco de dados
+
 - `serve`: inicia um servidor interno
 
 ## Configurações da Aplicação
