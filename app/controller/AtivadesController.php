@@ -37,15 +37,18 @@ class AtivadesController extends Controller
     {
         $request = new Input;
         $tipo = $request->post('tipo');
-        if ($this->validacaoDateAtividade($tipo)) {
+        $titulo = $request->post('titulo');
+        if ($tipo != null && $titulo != null && $this->validacaoDateAtividade($tipo)) {
             $this->entrada("Tarefa " . $request->post('titulo') . " do tipo Manutenção Urgente não pode ser criado");
-        } else {
+        } else if ($tipo != null && $titulo != null) {
             Atividades::create([
-                'titulo' => $request->post('titulo'),
+                'titulo' => $titulo,
                 'tipo_atividade' => $tipo,
                 'descricao' => $request->post('descricao')
             ]);
             $this->redirect(RouteCore::getRouteName('entrada'));
+        } else {
+            $this->entrada("Campos Não Inseridos");
         }
     }
     public function infoAtividade(): void
@@ -77,18 +80,21 @@ class AtivadesController extends Controller
         $request = new Input;
         $finalizado = $request->post('finalizado', FILTER_VALIDATE_BOOLEAN);
         $tipo = $request->post('tipo');
-        if ($this->validacaoDateAtividade($tipo)) {
+        $titulo = $request->post('titulo');
+        if ($tipo != null && $titulo != null && $this->validacaoDateAtividade($tipo)) {
             $this->entrada("Tarefa " . $request->post('titulo') . " Tipo não pode ser alterado");
         } else if ($finalizado && $this->validacaoDescricao($request->post('descricao'), array('tipo_atividade' => $request->post('tipo')))) {
             $this->entrada('Não Pode Ser Finalizado Descrição com menos de 50 caracteres');
-        } else {
+        } else if ($tipo != null && $titulo != null) {
             Atividades::firstWhere('id', $request->post('id'))->update([
-                'titulo' => $request->post('titulo'),
+                'titulo' => $titulo,
                 'descricao' => $request->post('descricao'),
-                'tipo_atividade' => $request->post('tipo'),
+                'tipo_atividade' => $tipo,
                 'finalizado' => $finalizado ? 1 : 0,
             ]);
             $this->redirect(RouteCore::getRouteName('entrada'));
+        } else {
+            $this->entrada("Campos Não Inseridos");
         }
     }
     public function apagarAtividade(): void

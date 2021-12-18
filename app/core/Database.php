@@ -3,9 +3,9 @@
 namespace App\Core;
 
 use DateTime;
+use DateTimeZone;
 use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Support\Facades\DB;
 
 class Database
 {
@@ -26,17 +26,15 @@ class Database
         $capsule->bootEloquent();
         $this->setTimeZoneDataBase();
         $capsule->connection()->getPdo();
-
     }
     public static function migration($function): void
     {
-        $migrations = glob('app/database/migration/*.php', GLOB_NOESCAPE);
-        foreach ($migrations as $migration) {
-            preg_match("/(\w+).php/", $migration, $class);
-            $class = array_slice(explode('_', $class[1]), 1);
-            $class = call_user_func_array(function ($value, $value2, $value3) {
-                return ucfirst($value) . ucfirst($value2) . ucfirst($value3);
-            }, $class);
+        $fileMigrations = glob('app/database/migration/*.php', GLOB_NOESCAPE);
+        foreach ($fileMigrations as $fileMigration) {
+            preg_match("/(\w+).php/", $fileMigration, $fileMigration);
+            $class = implode(array_map(function ($value) {
+                return ucfirst($value);
+            }, array_slice(explode('_', $fileMigration[1]), 1)));
             require_once $migration;
             (new $class)->$function();
         }
@@ -59,16 +57,15 @@ class Database
     private function setTimeZoneDataBase(): void
     {
         try {
-            Capsule::select("SET time_zone='" . date_default_timezone_get() . "'");
+            Capsule::update("SET time_zone='" . date_default_timezone_get() . "'");
         } catch (Exception $e) {
-            $now = new DateTime();
-            $mins = $now->getOffset() / 60;
-            $sgn = ($mins < 0 ? -1 : 1);
-            $mins = abs($mins);
-            $hrs = floor($mins / 60);
-            $mins -= $hrs * 60;
-            $offset = sprintf('%+d:%02d', $hrs * $sgn, $mins);
-            Capsule::update("SET @@global.time_zone='$offset'");
+            $timezone = new DateTimeZone(date_default_timezone_get());
+            $seconds = timezone_offset_get($timezone, new DateTime());
+            $minutes = round($seconds / 60);
+            $hours = floor($minutes / 60);
+            $remainMinutes = ($minutes % 60);
+            $offset = sprintf('%+d:%02d', $hours, $remainMinutes);
+            Capsule::update("SET time_zone='$offset'");
         }
     }
 }
