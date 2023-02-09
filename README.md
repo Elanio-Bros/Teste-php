@@ -30,8 +30,8 @@ No repositório [\app](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tre
 - [\core](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/core): Repositório de toda a base da aplicação, classe essenciais para o sistema.
 - [\database](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/database): Repositório das migrações e seedres utilizando o padrão aplicado pelo o [illuminate/database](https://github.com/illuminate/database).
 - [\models](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/models): Repositório dos modelos de banco de dados utilizando os padrões do [illuminate/database](https://github.com/illuminate/database).
-- [\routes](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/models): Repositório das de configuração das rotas da  aplicação.
-- [\view](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/models): Repositório dos layouts das páginas utlizando os padrões do [twig](https://twig.symfony.com/).
+- [\routes](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/models): Repositório das configuração das rotas da aplicação.
+- [\view](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/view): Repositório dos layouts das páginas utlizando os padrões do [twig](https://twig.symfony.com/).
 
 ### Repositório Public
 No repositório [\public](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/public) ficam todos os arquivos de inicialização do sistema e arquivos que podem ser acessados pelo o usuário.
