@@ -19,13 +19,13 @@ Foi usado algumas bibliotecas para facilitar a criação e usabilidade do sistem
  - [symfony/console](https://symfony.com/doc/current/components/console)
  
 ## Repositórios
-O sistema foi baseado no padrão **MVC** (Model,View,Controller) onde divide a carga entre toda a aplicação para melhor otimização do sistema, melhor leitura de código e segurança.
+O sistema foi baseado no padrão **MVC** (Model, View, Controller) onde divide a carga entre toda a aplicação para melhor otimização do sistema, melhor leitura de código e segurança.
  
 ### Repositório App
 No repositório [\app](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app) ficam todos os arquivos de configuração e base da aplicação.
 
-- [\command](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/command): Repositoro para os comandos personalizados utilizados no CLI(Terminal), comandos para Usuário, Migrações e Servidor.
-- [\config](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/config): Repositoro para as configurações do sistema e funções globais.
+- [\command](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/command): Repositório para os comandos personalizados utilizados no CLI(Terminal), comandos para Usuário, Migrações e Servidor.
+- [\config](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/config): Repositório para as configurações do sistema e funções globais.
 - [\controller](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/controller): Repositório do controladores utilizados na aplicação pela as rotas.
 - [\core](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/core): Repositório de toda a base da aplicação, classe essenciais para o sistema.
 - [\database](https://github.com/Elanio-Bros/Teste-php-via-maquinas/tree/main/app/database): Repositório das migrações e seedres utilizando o padrão aplicado pelo o [illuminate/database](https://github.com/illuminate/database).
