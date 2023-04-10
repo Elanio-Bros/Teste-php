@@ -9,7 +9,7 @@ Aplicação é um sistema simples de Criação de Atividades com tela de Login, 
 - **Senha**: Senha Admin
 
 ### Construção da Aplicação
-Todo o sistema foi feito em base do PHP 8 e o Banco de Dados MySql utilizando o padão **MVC** (Model,View,Controller) para melhor leitura,manutenção e segurança do sistema.
+Todo o sistema foi feito em base do PHP 8 com o Banco de Dados MySql, utilizando o padão **MVC** (Model, View, Controller) para melhor leitura, manutenção e segurança do sistema.
 
 ## Bibliotecas Utilizadas
 Foi usado algumas bibliotecas para facilitar a criação e usabilidade do sistema:
