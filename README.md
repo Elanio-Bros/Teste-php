@@ -1,5 +1,44 @@
 # Teste Php
 ### Grupo Via Máquinas
+<details>
+
+<summary>Teste Solicitado</summary>
+<br/>
+
+**Objetivo: Avaliar a sua capacidade para construção de soluções, qualidade do código e entendimento da tecnologia. 
+Competências como capacidade de organização, criatividade, clareza e assertividade também serão observadas.**
+
+## Desafio
+Implementar uma tela de controle de atividades utilizando PHP e MariaDB (MySQL).
+A tela deve atender os seguintes requisitos:
+1. Possibilidade de adicionar novas atividades contendo um título, descrição e tipo;
+2. Listar as atividades em aberto;
+3. Marcar e desmarcar as atividades como concluídas;
+4. Listar as atividades concluídas;
+5. Editar o título, descrição e tipo de uma atividade;
+6. Remover uma atividade.
+
+## Regras de negócio
+- Os tipos de atividades podem ser: Desenvolvimento, Atendimento, Manutenção e Manutenção urgente;
+- Atividades de manutenção urgente não podem ser removidas, apenas finalizadas;
+- Atividades de atendimento e manutenção urgentes não podem ser finalizadas se a descrição estiver preenchida com menos de 50 caracteres;
+- Manutenções urgentes não podem ser criadas (nem via edição) após as 13:00 das sextas-feiras.
+
+## Requisitos 
+### Funcionais:
+- O sistema deve estar protegido por um login
+- Todas as telas do sistema só poderão ser acessadas por usuários que estejam logados
+
+### Não Funcionais:
+- O sistema deve armazenar em banco de dados, de forma segura, a senha de acesso dos usuários.
+
+### Técnicos:
+1. Versionamento com Git;
+2. Bons padrões de desenvolvimento e código limpo;
+3. Documentação no código explicando as decisões de arquitetura e design tomadas;
+4. O projeto deve estar em um repositório no Github
+5. Qual o prazo para realização da tarefa?
+</details>
 
 ## Informações do Sistemas
 ### Lógica da Aplicação
