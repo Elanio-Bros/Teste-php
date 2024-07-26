@@ -1,5 +1,4 @@
 # Teste Php
-### Grupo Via Máquinas
 <details>
 
 <summary>Teste Solicitado</summary>
